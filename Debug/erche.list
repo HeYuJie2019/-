@@ -697,16 +697,16 @@ void move(int n)
  80007f6:	681b      	ldr	r3, [r3, #0]
  80007f8:	2200      	movs	r2, #0
  80007fa:	63da      	str	r2, [r3, #60]	; 0x3c
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,24);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,21);
  80007fc:	4b1b      	ldr	r3, [pc, #108]	; (800086c <move+0x29c>)
  80007fe:	681b      	ldr	r3, [r3, #0]
- 8000800:	2218      	movs	r2, #24
+ 8000800:	2215      	movs	r2, #21
  8000802:	641a      	str	r2, [r3, #64]	; 0x40
 
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,16);
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,18);
  8000804:	4b1a      	ldr	r3, [pc, #104]	; (8000870 <move+0x2a0>)
  8000806:	681b      	ldr	r3, [r3, #0]
- 8000808:	2210      	movs	r2, #16
+ 8000808:	2212      	movs	r2, #18
  800080a:	635a      	str	r2, [r3, #52]	; 0x34
 			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,0);
  800080c:	4b18      	ldr	r3, [pc, #96]	; (8000870 <move+0x2a0>)
@@ -958,10 +958,10 @@ void move(int n)
  800098a:	681b      	ldr	r3, [r3, #0]
  800098c:	2200      	movs	r2, #0
  800098e:	635a      	str	r2, [r3, #52]	; 0x34
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,30);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,36);
  8000990:	4b12      	ldr	r3, [pc, #72]	; (80009dc <move+0x40c>)
  8000992:	681b      	ldr	r3, [r3, #0]
- 8000994:	221e      	movs	r2, #30
+ 8000994:	2224      	movs	r2, #36	; 0x24
  8000996:	639a      	str	r2, [r3, #56]	; 0x38
 
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,100);
@@ -980,10 +980,10 @@ void move(int n)
  80009aa:	681b      	ldr	r3, [r3, #0]
  80009ac:	2200      	movs	r2, #0
  80009ae:	635a      	str	r2, [r3, #52]	; 0x34
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,30);
+		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,27);
  80009b0:	4b07      	ldr	r3, [pc, #28]	; (80009d0 <move+0x400>)
  80009b2:	681b      	ldr	r3, [r3, #0]
- 80009b4:	221e      	movs	r2, #30
+ 80009b4:	221b      	movs	r2, #27
  80009b6:	639a      	str	r2, [r3, #56]	; 0x38
 
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,100);
@@ -1107,9 +1107,9 @@ void shuxian()
  8000a74:	2b04      	cmp	r3, #4
  8000a76:	d11e      	bne.n	8000ab6 <shuxian+0xd6>
 	{
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1&&Zflag==1)
- 8000a78:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000a7c:	4813      	ldr	r0, [pc, #76]	; (8000acc <shuxian+0xec>)
+		if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1&&Zflag==1)
+ 8000a78:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8000a7c:	4810      	ldr	r0, [pc, #64]	; (8000ac0 <shuxian+0xe0>)
  8000a7e:	f001 fa29 	bl	8001ed4 <HAL_GPIO_ReadPin>
  8000a82:	4603      	mov	r3, r0
  8000a84:	2b01      	cmp	r3, #1
@@ -1130,9 +1130,9 @@ void shuxian()
  8000a9c:	2200      	movs	r2, #0
  8000a9e:	601a      	str	r2, [r3, #0]
 		}
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
- 8000aa0:	f44f 6180 	mov.w	r1, #1024	; 0x400
- 8000aa4:	4809      	ldr	r0, [pc, #36]	; (8000acc <shuxian+0xec>)
+		if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==0)
+ 8000aa0:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 8000aa4:	4806      	ldr	r0, [pc, #24]	; (8000ac0 <shuxian+0xe0>)
  8000aa6:	f001 fa15 	bl	8001ed4 <HAL_GPIO_ReadPin>
  8000aaa:	4603      	mov	r3, r0
  8000aac:	2b00      	cmp	r3, #0

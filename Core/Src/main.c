@@ -212,9 +212,9 @@ void move(int n)
 			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,0);
 
 			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,0);
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,24);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,21);
 
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,16);
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,18);
 			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,0);
@@ -282,13 +282,13 @@ void move(int n)
 	if(n==5)//倒车入库
 	{
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,30);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,36);
 
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,100);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,100);
 
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,30);
+		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,27);
 
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,100);
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,100);
@@ -325,12 +325,12 @@ void shuxian()
 
 	if(step==4)
 	{
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1&&Zflag==1)
+		if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1&&Zflag==1)
 		{
 			Z+=1;
 			Zflag=0;
 		}
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
+		if(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==0)
 		{
 			Zflag=1;
 		}
@@ -466,6 +466,7 @@ int main(void)
 */
 //11左
 	  buzhou();
+
 
   }
   /* USER CODE END 3 */
