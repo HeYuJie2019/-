@@ -325,7 +325,7 @@ void shuxian()
 			Xflag=0;
 		}
 	}
-	if(step==2||step==4||step==6)//旋转
+	if(step==2||step==4||step==6||step==12||step==14)//旋转
 	{
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1&&turnflag==1)
 		{
@@ -337,7 +337,7 @@ void shuxian()
 			turnflag=1;
 		}
 	}
-	if(step==3)//直走
+	if(step==3||step==11)//直走
 	{
 		turn=0;
 		turnflag=1;
@@ -351,7 +351,7 @@ void shuxian()
 			Yflag=1;
 		}
 	}
-	if(step==5)//退回一格
+	if(step==5||step==13)//退回一格
 	{
 		turn=0;
 		turnflag=1;
@@ -365,7 +365,7 @@ void shuxian()
 			Xflag=1;
 		}
 	}
-	if(step==7)//退回一格
+	if(step==7||step==15)//退回一格
 	{
 		turn=0;
 		turnflag=1;
@@ -428,8 +428,8 @@ void buzhou()
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			HAL_Delay(1000);
-			step=4;
+			HAL_Delay(3000);
+			step=11;
 		}
 	}
 	if(step==4)//旋转
@@ -493,6 +493,62 @@ void buzhou()
 			move(4);
 			HAL_Delay(1000);
 			step=9;
+		}
+	}
+	//决赛
+	if(step==11)
+	{
+		move(1);
+		shuxian();
+		if(Y==4&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
+		{
+			move(4);
+			HAL_Delay(1000);
+			step=12;
+		}
+	}
+	if(step==12)
+	{
+		move(3);
+		shuxian();
+		if(turn==2)
+		{
+			move(4);
+			HAL_Delay(3000);
+			step=13;
+		}
+	}
+	if(step==13)
+	{
+		move(1);
+		shuxian();
+		if(X==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
+		{
+			move(4);
+			HAL_Delay(1000);
+			step=14;
+		}
+	}
+	if(step==14)
+	{
+		move(3);
+		shuxian();
+		if(turn==2)
+		{
+			move(4);
+			HAL_Delay(1000);
+			step=15;
+		}
+	}
+	if(step==15)
+	{
+		move(1);
+		shuxian();
+		if(Y==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
+		{
+			move(4);
+			HAL_Delay(1000);
+			step=8;
 		}
 	}
 
