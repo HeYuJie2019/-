@@ -72,22 +72,22 @@ uint8_t blueRed[]={0XC0,0XB6,0XC9,0XAB,0XBA,0XEC,0XC9,0XAB};
 uint8_t blueGreen[]={0XC0,0XB6,0XC9,0XAB,0XC2,0XCC,0XC9,0XAB};
 uint8_t greenBlue[]={0XC2,0XCC,0XC9,0XAB,0XC0,0XB6,0XC9,0XAB};
 
-uint8_t  A0[]={0xFF,0x09,0x00,0x00,0x00};
-uint8_t  A1[]={0xFF,0x09,0x00,0x01,0x00};
-uint8_t  A2[]={0xFF,0x09,0x00,0x02,0x00};
-uint8_t  A3[]={0xFF,0x09,0x00,0x03,0x00};
-uint8_t  A4[]={0xFF,0x09,0x00,0x04,0x00};
-uint8_t  A5[]={0xFF,0x09,0x00,0x05,0x00};
-uint8_t  A6[]={0xFF,0x09,0x00,0x06,0x00};
-uint8_t  A7[]={0xFF,0x09,0x00,0x07,0x00};
-uint8_t  A8[]={0xFF,0x09,0x00,0x08,0x00};
-uint8_t  A9[]={0xFF,0x09,0x00,0x09,0x00};
-uint8_t A10[]={0xFF,0x09,0x00,0x0a,0x00};
-uint8_t A11[]={0xFF,0x09,0x00,0x0b,0x00};
-uint8_t A12[]={0xFF,0x09,0x00,0x0c,0x00};
-uint8_t A13[]={0xFF,0x09,0x00,0x0d,0x00};
-uint8_t A14[]={0xFF,0x09,0x00,0x0e,0x00};
-uint8_t A15[]={0xFF,0x09,0x00,0x0f,0x00};
+uint8_t  A0[]={0XFF,0X09,0X00,0X00,0X00};
+uint8_t  A1[]={0XFF,0X09,0X00,0X01,0X00};
+uint8_t  A2[]={0XFF,0X09,0X00,0X02,0X00};
+uint8_t  A3[]={0XFF,0X09,0X00,0X03,0X00};
+uint8_t  A4[]={0XFF,0X09,0X00,0X04,0X00};
+uint8_t  A5[]={0XFF,0X09,0X00,0X05,0X00};
+uint8_t  A6[]={0XFF,0X09,0X00,0X06,0X00};
+uint8_t  A7[]={0XFF,0X09,0X00,0X07,0X00};
+uint8_t  A8[]={0XFF,0X09,0X00,0X08,0X00};
+uint8_t  A9[]={0XFF,0X09,0X00,0X09,0X00};
+uint8_t A10[]={0XFF,0X09,0X00,0X0a,0X00};
+uint8_t A11[]={0XFF,0X09,0X00,0X0b,0X00};
+uint8_t A12[]={0XFF,0X09,0X00,0X0c,0X00};
+uint8_t A13[]={0XFF,0X09,0X00,0X0d,0X00};
+uint8_t A14[]={0XFF,0X09,0X00,0X0e,0X00};
+uint8_t A15[]={0XFF,0X09,0X00,0X0f,0X00};
 int LY=0;
 int step=0;
 int m=0;
@@ -428,7 +428,7 @@ void shuxian()
 			Yflag=1;
 		}
 	}
-	if(step==5||step==13)//�??回一�??
+	if(step==5||step==13)//�????回一�????
 	{
 		turn=0;
 		turnflag=1;
@@ -442,7 +442,7 @@ void shuxian()
 			Xflag=1;
 		}
 	}
-	if(step==7||step==15)//�??回一�??
+	if(step==7||step==15)//�????回一�????
 	{
 		turn=0;
 		turnflag=1;
@@ -475,7 +475,6 @@ void buzhou()
 {
 	if(step==0)//等待语音
 	{
-		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 		HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
 		if(color==1)
 		{
@@ -507,35 +506,31 @@ void buzhou()
 			HAL_UART_Transmit(&huart2,blueGreen,sizeof(blueGreen),1000);
 			step=1;
 		}
-//		step=1;
+		HAL_Delay(2000);
+		step=1;
 	}
-	if(step==1)//直走
+	if(step==1)//move straight
 	{
 		move(1);
 		shuxian();
 		if(X==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=2;
 		}
 	}
-	if(step==2)//旋转
+	if(step==2)//turn right
 	{
 		move(3);
 		shuxian();
 		if(turn==3)
 		{
-			/*while(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==0)
-			{
-				adjust(1);
-			}*/
 			move(4);
-			//HAL_Delay(1000);
-			step=1;
+			step=-1;
+//			step=3;
 		}
 	}
-	if(step==-1)//等待进入白色区域
+	if(step==-1)//move straight
 	{
 		move(1);
 		shuxian();
@@ -545,81 +540,68 @@ void buzhou()
 			step=-2;
 		}
 	}
-	if(step==-2)//给信号再�?前走
+	if(step==-2)//wait for car1
 	{
-		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-//			HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 			step=3;
 		}
 	}
-	if(step==3)//直走
+	if(step==3)//move straight and activate arm
 	{
 		move(1);
 		shuxian();
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			/*HAL_UART_Receive(&huart3,&rx,1,HAL_MAX_DELAY);
-			if(rx==0)
-			{
-				step=4;//初赛4
-			}
-			else if(rx==1)
-			{
-				step=11;//决赛11
-			}*/
-//			step=-4;
+			HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);//机械臂初始化
+			HAL_Delay(3000);
 			step=-4;
 		}
 	}
-	if(step==-4)//机械臂
+	if(step==-4)//wait for car1 to catch
 	{
-		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
+			HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
+			step=-5;
+		}
+	}
+	if(step==-5)//wait for car1 to move
+	{
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+//			step=4;
 			step=11;
 		}
 	}
-	if(step==4)//旋转
+	if(step==4)//turn right
 	{
 		move(3);
 		shuxian();
 		if(turn==3)
 		{
-			/*while(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==0)
-			{
-				adjust(1);
-			}*/
 			move(4);
-			//HAL_Delay(1000);
 			step=5;
 		}
 	}
-	if(step==5)//�??回一�??
+	if(step==5)//move straight
 	{
 		move(1);
 		shuxian();
 		if(X==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=6;
 		}
 	}
-	if(step==6)//旋转
+	if(step==6)//turn right
 	{
 		move(3);
 		shuxian();
 		if(turn==3)
 		{
-			/*while(HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==0)
-			{
-				adjust(1);
-			}*/
 			move(4);
-			//HAL_Delay(1000);
 			step=7;
 		}
 	}
@@ -630,7 +612,6 @@ void buzhou()
 		if(Y==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=8;
 		}
 	}
@@ -641,11 +622,9 @@ void buzhou()
 		if(Z==3)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=9;
 		}
 	}
-	//决赛
 	if(step==11)
 	{
 		move(1);
@@ -653,14 +632,12 @@ void buzhou()
 		if(Y==4&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-//			HAL_Delay(3000);
-			step=-5;
+			step=-6;
 //			step=12;
 		}
 	}
-	if(step==-5)//机械臂
+	if(step==-6)//arm move
 	{
-		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
 			step=12;
@@ -673,7 +650,6 @@ void buzhou()
 		if(turn==3)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=13;
 		}
 	}
@@ -684,7 +660,6 @@ void buzhou()
 		if(X==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=14;
 		}
 	}
@@ -695,7 +670,6 @@ void buzhou()
 		if(turn==3)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=15;
 		}
 	}
@@ -706,7 +680,6 @@ void buzhou()
 		if(Y==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
 			step=8;
 		}
 	}
@@ -770,17 +743,16 @@ int main(void)
 
 
 //	       HAL_UART_Transmit(&huart2,YY1,sizeof(YY1),1000);
+//	       HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
 //	       HAL_Delay(2000);
+	  /*HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
+	  HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
+	  HAL_Delay(10000);*/
+	 // buzhou();
 
 
-//	HAL_UART_Transmit(&huart2,redBlue,sizeof(redBlue),1000);
-	HAL_UART_Transmit(&huart1,A1,sizeof(A1),1000);
-	HAL_Delay(1000);
 
-//	  buzhou();
-
-
-//11�??
+//11�????
 
   }
   /* USER CODE END 3 */
@@ -1033,7 +1005,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
