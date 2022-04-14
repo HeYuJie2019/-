@@ -65,23 +65,31 @@ uint8_t YY[10];
 uint8_t YY1[]={0XBA,0XEC,0XC9,0XAB};//R
 uint8_t YY2[]={0XC0,0XB6,0XC9,0XAB};//B
 uint8_t YY3[]={0XC2,0XCC,0XC9,0XAB};//G
-uint8_t  A0[]={ 0xFF,0x09,0x00,0x00,0x00};
-uint8_t  A1[]={ 0xFF,0x09,0x00,0x01,0x00};
-uint8_t  A2[]={ 0xFF,0x09,0x00,0x02,0x00};
-uint8_t  A3[]={ 0xFF,0x09,0x00,0x03,0x00};
-uint8_t  A4[]={ 0xFF,0x09,0x00,0x04,0x00};
-uint8_t  A5[]={ 0xFF,0x09,0x00,0x05,0x00};
-uint8_t  A6[]={ 0xFF,0x09,0x00,0x06,0x00};
-uint8_t  A7[]={ 0xFF,0x09,0x00,0x07,0x00};
-uint8_t  A8[]={ 0xFF,0x09,0x00,0x08,0x00};
-uint8_t  A9[]={ 0xFF,0x09,0x00,0x09,0x00};
-uint8_t A10[]={ 0xFF,0x09,0x00,0x0a,0x00};
-uint8_t A11[]={ 0xFF,0x09,0x00,0x0b,0x00};
-uint8_t A12[]={ 0xFF,0x09,0x00,0x0c,0x00};
-uint8_t A13[]={ 0xFF,0x09,0x00,0x0d,0x00};
-uint8_t A14[]={ 0xFF,0x09,0x00,0x0e,0x00};
-uint8_t A15[]={ 0xFF,0x09,0x00,0x0f,0x00};
-int step=1;
+uint8_t redGreen[]={0XBA,0XEC,0XC9,0XAB,0XC2,0XCC,0XC9,0XAB};
+uint8_t greenRed[]={0XC2,0XCC,0XC9,0XAB,0XBA,0XEC,0XC9,0XAB};
+uint8_t redBlue[]={0XBA,0XEC,0XC9,0XAB,0XC0,0XB6,0XC9,0XAB};
+uint8_t blueRed[]={0XC0,0XB6,0XC9,0XAB,0XBA,0XEC,0XC9,0XAB};
+uint8_t blueGreen[]={0XC0,0XB6,0XC9,0XAB,0XC2,0XCC,0XC9,0XAB};
+uint8_t greenBlue[]={0XC2,0XCC,0XC9,0XAB,0XC0,0XB6,0XC9,0XAB};
+
+uint8_t  A0[]={0xFF,0x09,0x00,0x00,0x00};
+uint8_t  A1[]={0xFF,0x09,0x00,0x01,0x00};
+uint8_t  A2[]={0xFF,0x09,0x00,0x02,0x00};
+uint8_t  A3[]={0xFF,0x09,0x00,0x03,0x00};
+uint8_t  A4[]={0xFF,0x09,0x00,0x04,0x00};
+uint8_t  A5[]={0xFF,0x09,0x00,0x05,0x00};
+uint8_t  A6[]={0xFF,0x09,0x00,0x06,0x00};
+uint8_t  A7[]={0xFF,0x09,0x00,0x07,0x00};
+uint8_t  A8[]={0xFF,0x09,0x00,0x08,0x00};
+uint8_t  A9[]={0xFF,0x09,0x00,0x09,0x00};
+uint8_t A10[]={0xFF,0x09,0x00,0x0a,0x00};
+uint8_t A11[]={0xFF,0x09,0x00,0x0b,0x00};
+uint8_t A12[]={0xFF,0x09,0x00,0x0c,0x00};
+uint8_t A13[]={0xFF,0x09,0x00,0x0d,0x00};
+uint8_t A14[]={0xFF,0x09,0x00,0x0e,0x00};
+uint8_t A15[]={0xFF,0x09,0x00,0x0f,0x00};
+int LY=0;
+int step=0;
 int m=0;
 int X=0;
 int Y=0;
@@ -91,6 +99,13 @@ int Xflag=1;
 int Yflag=1;
 int Zflag=1;
 int turnflag=1;
+uint8_t color=0;
+uint8_t rx1=0;
+uint8_t rx2=0;
+uint8_t rx3=0;
+uint8_t rx4=0;
+uint8_t rx5=0;
+uint8_t tx[]={0};
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -147,10 +162,10 @@ void move(int n)
 	{
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,29);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,14);
@@ -162,31 +177,31 @@ void move(int n)
 
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,29);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,30);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,16);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 		}
 
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,29);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,14);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,16);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 		}
 
@@ -270,16 +285,16 @@ void move(int n)
 	if(n==3)//旋转
 	{
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,24);//22
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,27);//27
 
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,20);//20
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,24);//21
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,0);
 
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,20);//20
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,0);
 
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,0);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,22);//21
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,21);//21
 	}
 	if(n==4)//刹车
 	{
@@ -309,6 +324,68 @@ void move(int n)
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,30);
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 	}
+	if(n==6)
+	{
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
+		{
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26.1);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23.4);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,12.6);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,27);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
+		}
+
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
+		{
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26.1);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23.4);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,27);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14.4);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
+		}
+
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
+		{
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26.1);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23.4);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,12.6);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
+
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14.4);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
+		}
+
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
+		{
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,100);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,100);
+
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,100);
+			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,100);
+
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,100);
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,100);
+
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,100);
+			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,100);
+		}
+	}
 }
 
 void shuxian()
@@ -327,17 +404,17 @@ void shuxian()
 	}
 	if(step==2||step==4||step==6||step==12||step==14)//旋转
 	{
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&turnflag==1)
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1&&turnflag==1)
 		{
 			turn+=1;
 			turnflag=0;
 		}
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0)
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
 		{
 			turnflag=1;
 		}
 	}
-	if(step==3||step==11)//直走
+	if(step==3||step==11||step==-1)//直走
 	{
 		turn=0;
 		turnflag=1;
@@ -351,7 +428,7 @@ void shuxian()
 			Yflag=1;
 		}
 	}
-	if(step==5||step==13)//退回一格
+	if(step==5||step==13)//�??回一�??
 	{
 		turn=0;
 		turnflag=1;
@@ -365,7 +442,7 @@ void shuxian()
 			Xflag=1;
 		}
 	}
-	if(step==7||step==15)//退回一格
+	if(step==7||step==15)//�??回一�??
 	{
 		turn=0;
 		turnflag=1;
@@ -393,8 +470,45 @@ void shuxian()
 	}
 }
 
+
 void buzhou()
 {
+	if(step==0)//等待语音
+	{
+		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
+		HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
+		if(color==1)
+		{
+			HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
+			step=1;
+		}
+		else if(color==2)
+		{
+			HAL_UART_Transmit(&huart2,redBlue,sizeof(redBlue),1000);
+			step=1;
+		}
+		else if(color==3)
+		{
+			HAL_UART_Transmit(&huart2,greenBlue,sizeof(greenBlue),1000);
+			step=1;
+		}
+		else if(color==4)
+		{
+			HAL_UART_Transmit(&huart2,greenRed,sizeof(greenRed),1000);
+			step=1;
+		}
+		else if(color==5)
+		{
+			HAL_UART_Transmit(&huart2,blueRed,sizeof(blueRed),1000);
+			step=1;
+		}
+		else if(color==6)
+		{
+			HAL_UART_Transmit(&huart2,blueGreen,sizeof(blueGreen),1000);
+			step=1;
+		}
+//		step=1;
+	}
 	if(step==1)//直走
 	{
 		move(1);
@@ -418,6 +532,25 @@ void buzhou()
 			}*/
 			move(4);
 			//HAL_Delay(1000);
+			step=1;
+		}
+	}
+	if(step==-1)//等待进入白色区域
+	{
+		move(1);
+		shuxian();
+		if(Y==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
+		{
+			move(4);
+			step=-2;
+		}
+	}
+	if(step==-2)//给信号再�?前走
+	{
+		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+//			HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
 			step=3;
 		}
 	}
@@ -428,8 +561,25 @@ void buzhou()
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			HAL_Delay(3000);
-			step=11;//决赛11
+			/*HAL_UART_Receive(&huart3,&rx,1,HAL_MAX_DELAY);
+			if(rx==0)
+			{
+				step=4;//初赛4
+			}
+			else if(rx==1)
+			{
+				step=11;//决赛11
+			}*/
+//			step=-4;
+			step=-4;
+		}
+	}
+	if(step==-4)//机械臂
+	{
+		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+			step=11;
 		}
 	}
 	if(step==4)//旋转
@@ -447,7 +597,7 @@ void buzhou()
 			step=5;
 		}
 	}
-	if(step==5)//退回一格
+	if(step==5)//�??回一�??
 	{
 		move(1);
 		shuxian();
@@ -503,7 +653,16 @@ void buzhou()
 		if(Y==4&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			//HAL_Delay(1000);
+//			HAL_Delay(3000);
+			step=-5;
+//			step=12;
+		}
+	}
+	if(step==-5)//机械臂
+	{
+		HAL_UART_Transmit(&huart3,tx,sizeof(tx),1000);
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
 			step=12;
 		}
 	}
@@ -514,13 +673,13 @@ void buzhou()
 		if(turn==3)
 		{
 			move(4);
-			HAL_Delay(3000);
+			//HAL_Delay(1000);
 			step=13;
 		}
 	}
 	if(step==13)
 	{
-		move(1);
+		move(6);
 		shuxian();
 		if(X==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
@@ -598,7 +757,7 @@ int main(void)
     HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_2);
     HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_3);
     HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_4);
-    HAL_UART_Receive_IT(&huart1,YY,1000);
+//    HAL_UART_Receive_IT(&huart3,rx1,1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -614,10 +773,14 @@ int main(void)
 //	       HAL_Delay(2000);
 
 
+//	HAL_UART_Transmit(&huart2,redBlue,sizeof(redBlue),1000);
+	HAL_UART_Transmit(&huart1,A1,sizeof(A1),1000);
+	HAL_Delay(1000);
+
+//	  buzhou();
 
 
-//11左
-	  	  	buzhou();
+//11�??
 
   }
   /* USER CODE END 3 */
@@ -631,7 +794,6 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Supply configuration update enable
   */
@@ -661,19 +823,11 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3|RCC_PERIPHCLK_USART2
-                              |RCC_PERIPHCLK_USART1;
-  PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
-  PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -975,7 +1129,7 @@ static void MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 115200;
+  huart3.Init.BaudRate = 9600;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -1079,4 +1233,3 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
