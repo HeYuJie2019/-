@@ -99,6 +99,7 @@ int Xflag=1;
 int Yflag=1;
 int Zflag=1;
 int turnflag=1;
+int arm=0;
 uint8_t color=0;
 uint8_t rx1=0;
 uint8_t rx2=0;
@@ -475,7 +476,7 @@ void buzhou()
 {
 	if(step==0)//等待语音
 	{
-		HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
+		/*HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
 		if(color==1)
 		{
 			HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
@@ -506,7 +507,7 @@ void buzhou()
 			HAL_UART_Transmit(&huart2,blueGreen,sizeof(blueGreen),1000);
 			step=1;
 		}
-		HAL_Delay(2000);
+		HAL_Delay(2000);*/
 		step=1;
 	}
 	if(step==1)//move straight
@@ -526,8 +527,8 @@ void buzhou()
 		if(turn==3)
 		{
 			move(4);
-			step=-1;
-//			step=3;
+//			step=-1;
+			step=3;
 		}
 	}
 	if(step==-1)//move straight
@@ -540,34 +541,47 @@ void buzhou()
 			step=-2;
 		}
 	}
-	if(step==-2)//wait for car1
+	if(step==-2)//wait for car1 and activate arm
 	{
+		if(arm==0)
+		{
+			HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);//机械臂初始化
+			arm=1;
+		}
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
 			step=3;
 		}
 	}
-	if(step==3)//move straight and activate arm
+	if(step==3)//move straight
 	{
 		move(1);
 		shuxian();
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);//机械臂初始化
 			HAL_Delay(3000);
-			step=-4;
+//			step=-4;
+			step=99;
 		}
 	}
 	if(step==-4)//wait for car1 to catch
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-			HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
+			HAL_UART_Transmit(&huart1, (uint8_t *)A3,sizeof(A3),0xffff);//left_turn
 			step=-5;
 		}
 	}
-	if(step==-5)//wait for car1 to move
+	if(step==-5)
+	{
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+			HAL_UART_Transmit(&huart1, (uint8_t *)A4,sizeof(A4),0xffff);//right_turn
+			step=-6;
+		}
+	}
+	if(step==-6)//wait for car1 to move
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
@@ -748,7 +762,7 @@ int main(void)
 	  /*HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
 	  HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
 	  HAL_Delay(10000);*/
-	 // buzhou();
+	  buzhou();
 
 
 
