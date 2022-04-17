@@ -476,7 +476,7 @@ void buzhou()
 {
 	if(step==0)//等待语音
 	{
-		/*HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
+		HAL_UART_Receive(&huart3,&color,1,HAL_MAX_DELAY);
 		if(color==1)
 		{
 			HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
@@ -507,8 +507,8 @@ void buzhou()
 			HAL_UART_Transmit(&huart2,blueGreen,sizeof(blueGreen),1000);
 			step=1;
 		}
-		HAL_Delay(2000);*/
-		step=1;
+//		HAL_Delay(2000);
+//		step=1;
 	}
 	if(step==1)//move straight
 	{
@@ -527,8 +527,8 @@ void buzhou()
 		if(turn==3)
 		{
 			move(4);
-//			step=-1;
-			step=3;
+			step=-1;
+//			step=3;
 		}
 	}
 	if(step==-1)//move straight
@@ -548,28 +548,27 @@ void buzhou()
 			HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);//机械臂初始化
 			arm=1;
 		}
-		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK&&arm==1)
 		{
 			step=3;
 		}
 	}
 	if(step==3)//move straight
 	{
+		HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);
 		move(1);
 		shuxian();
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
 			move(4);
-			HAL_Delay(3000);
-//			step=-4;
-			step=99;
+			step=-4;
 		}
 	}
 	if(step==-4)//wait for car1 to catch
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-			HAL_UART_Transmit(&huart1, (uint8_t *)A3,sizeof(A3),0xffff);//left_turn
+			HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
 			step=-5;
 		}
 	}
@@ -577,7 +576,7 @@ void buzhou()
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-			HAL_UART_Transmit(&huart1, (uint8_t *)A4,sizeof(A4),0xffff);//right_turn
+			HAL_UART_Transmit(&huart1, (uint8_t *)A2,sizeof(A2),0xffff);
 			step=-6;
 		}
 	}
@@ -651,6 +650,22 @@ void buzhou()
 		}
 	}
 	if(step==-6)//arm move
+	{
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+			HAL_UART_Transmit(&huart1, (uint8_t *)A5,sizeof(A5),0xffff);
+			step=-7;
+		}
+	}
+	if(step==-7)//arm move
+	{
+		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
+		{
+			HAL_UART_Transmit(&huart1, (uint8_t *)A6,sizeof(A6),0xffff);
+			step=-8;
+		}
+	}
+	if(step==-8)//wait for car1
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
