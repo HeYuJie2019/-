@@ -115,8 +115,8 @@ void adjust(int n)
 {
 	if(n==1)
 	{
-		/*if(m==0)
-		{*/
+		if(m==0)
+		{
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,0);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,19);
 
@@ -129,7 +129,7 @@ void adjust(int n)
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,0);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,25);
 			HAL_Delay(350);
-		/*m=1;
+		m=1;
 		}
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
@@ -154,7 +154,7 @@ void adjust(int n)
 
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,0);
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,25);
-		HAL_Delay(700);*/
+		HAL_Delay(700);
 	}
 }
 void move(int n)
