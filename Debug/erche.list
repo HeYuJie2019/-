@@ -877,10 +877,10 @@ void move(int n)
  8000918:	2200      	movs	r2, #0
  800091a:	641a      	str	r2, [r3, #64]	; 0x40
 
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,22);//20
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,24);//22
  800091c:	4b73      	ldr	r3, [pc, #460]	; (8000aec <move+0x51c>)
  800091e:	681b      	ldr	r3, [r3, #0]
- 8000920:	2216      	movs	r2, #22
+ 8000920:	2218      	movs	r2, #24
  8000922:	635a      	str	r2, [r3, #52]	; 0x34
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,0);
  8000924:	4b71      	ldr	r3, [pc, #452]	; (8000aec <move+0x51c>)
@@ -893,7 +893,7 @@ void move(int n)
  800092e:	681b      	ldr	r3, [r3, #0]
  8000930:	2200      	movs	r2, #0
  8000932:	63da      	str	r2, [r3, #60]	; 0x3c
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,27);//25
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,27);//27
  8000934:	4b6d      	ldr	r3, [pc, #436]	; (8000aec <move+0x51c>)
  8000936:	681b      	ldr	r3, [r3, #0]
  8000938:	221b      	movs	r2, #27
