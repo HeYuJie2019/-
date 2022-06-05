@@ -115,46 +115,17 @@ void adjust(int n)
 {
 	if(n==1)
 	{
-		if(m==0)
-		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,0);
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,19);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,0);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,27);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,0);
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,15);
-
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,0);
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,20);
-
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,0);
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,25);
-			HAL_Delay(350);
-		m=1;
-		}
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26);
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
-
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,24);
+		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
 		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,10);
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
-
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,10);
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
-		HAL_Delay(800);
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,19);
-
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,0);
-		__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,15);
-
 		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,20);
+		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,22);
 
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,0);
-		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,25);
-		HAL_Delay(700);
+		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,25);
+		__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 	}
 }
 void move(int n)
@@ -172,7 +143,7 @@ void move(int n)
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,14);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,30);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,33);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 		}
 
@@ -184,7 +155,7 @@ void move(int n)
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,28);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,30);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,33);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14);
@@ -208,17 +179,18 @@ void move(int n)
 
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,100);
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,100);
-
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,100);
-			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,100);
-
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,100);
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,100);
-
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,100);
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,100);
+			adjust(1);
+//			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,100);
+//			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,100);
+//
+//			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,100);
+//			__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,100);
+//
+//			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,100);
+//			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,100);
+//
+//			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,100);
+//			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,100);
 		}
 	}
 	if(n==2)//右行
@@ -286,16 +258,16 @@ void move(int n)
 	if(n==3)//旋转
 	{
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1,0);
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,28);//28
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2,27);//20
 
-		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,26);//26
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3,27);//25
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4,0);
 
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,24);//22
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1,25);//25
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2,0);
 
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3,0);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,27);//27
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4,23);//20
 	}
 	if(n==4)//刹车
 	{
@@ -329,28 +301,28 @@ void move(int n)
 	{
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,14);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,27);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,35);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_4,0);
 		}
 
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
-			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,27);
+			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,35);
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_3,14);
@@ -359,10 +331,10 @@ void move(int n)
 
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1)
 		{
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2,0);
 
-			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,23);
+			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_3,26);
 			__HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_4,0);
 
 			__HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1,12);
@@ -405,12 +377,12 @@ void shuxian()
 	}
 	if(step==2||step==4||step==6||step==12||step==14)//旋转
 	{
-		if((HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1||HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1)&&turnflag==1)
+		if((HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==1&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==1)&&turnflag==1)
 		{
 			turn+=1;
 			turnflag=0;
 		}
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0&&HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0)
+		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10)==0||HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_11)==0)
 		{
 			turnflag=1;
 		}
@@ -524,7 +496,7 @@ void buzhou()
 	{
 		move(3);
 		shuxian();
-		if(turn>=4)
+		if(turn==2)
 		{
 			move(4);
 			step=-1;
@@ -556,7 +528,7 @@ void buzhou()
 	if(step==3)//move straight
 	{
 		HAL_UART_Transmit(&huart1, (uint8_t *)A0,sizeof(A0),0xffff);
-		move(6);
+		move(1);
 		shuxian();
 		if(Y==2&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
@@ -595,7 +567,7 @@ void buzhou()
 	{
 		move(3);
 		shuxian();
-		if(turn>=4)
+		if(turn==2)
 		{
 			move(4);
 			step=5;
@@ -615,7 +587,7 @@ void buzhou()
 	{
 		move(3);
 		shuxian();
-		if(turn>=4)
+		if(turn==2)
 		{
 			move(4);
 			step=7;
@@ -657,7 +629,7 @@ void buzhou()
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-			HAL_UART_Transmit(&huart1, (uint8_t *)A5,sizeof(A5),0xffff);
+			HAL_UART_Transmit(&huart1, (uint8_t *)A6,sizeof(A6),0xffff);
 			step=-9;
 		}
 	}
@@ -665,7 +637,7 @@ void buzhou()
 	{
 		if(HAL_UART_Receive(&huart3,&rx2,1,HAL_MAX_DELAY)==HAL_OK)
 		{
-			HAL_UART_Transmit(&huart1, (uint8_t *)A6,sizeof(A6),0xffff);
+			HAL_UART_Transmit(&huart1, (uint8_t *)A5,sizeof(A5),0xffff);
 			HAL_Delay(35000);
 			step=12;
 		}
@@ -681,7 +653,7 @@ void buzhou()
 	{
 		move(3);
 		shuxian();
-		if(turn>=4)
+		if(turn==2)
 		{
 			move(4);
 			step=13;
@@ -689,7 +661,7 @@ void buzhou()
 	}
 	if(step==13)
 	{
-		move(6);
+		move(1);
 		shuxian();
 		if(X==1&&HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13)==1)
 		{
@@ -701,7 +673,7 @@ void buzhou()
 	{
 		move(3);
 		shuxian();
-		if(turn>=4)
+		if(turn==2)
 		{
 			move(4);
 			step=15;
@@ -782,7 +754,7 @@ int main(void)
 	  /*HAL_UART_Transmit(&huart2,redGreen,sizeof(redGreen),1000);
 	  HAL_UART_Transmit(&huart1, (uint8_t *)A1,sizeof(A1),0xffff);
 	  HAL_Delay(10000);*/
-	  buzhou();
+		buzhou();
 
 
 
